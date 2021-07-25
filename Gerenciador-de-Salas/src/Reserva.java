@@ -1,6 +1,3 @@
-/**
- * Reserva
- */
 public class Reserva {
 
     
