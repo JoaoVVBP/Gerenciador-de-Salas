@@ -1,3 +1,3 @@
-public class Participantes {
+public class Participante {
     
 }
