@@ -3,8 +3,9 @@ import java.util.*;
 
 public class Main {
     static List<Participante> participantes = new LinkedList<>();
+    static List<String> emails = new LinkedList<>();
 
-    public static Participante verificarSobreposicao(Participante p1, Participante p2) {
+    public static Participante verificarSobreposicao(Usuario p1, Usuario p2) {
         Participante p3 = new Participante();
 
         // Caso seja necessário verificar mais de um intervalo:
@@ -47,7 +48,50 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        LocalDate dataAtual;
+        MarcadorDeReuniao marcador = new MarcadorDeReuniao();
+        String email;
+        Scanner s = new Scanner(System.in); // Deixar pra pensar na entrada no final
+        Gerenciador gerente = new Gerenciador();
+        int datas [] = new int[6];
+
+        System.out.println("Gerenciador, informe o seu email: ");
+        email = s.nextLine();
+        gerente.email = email;
+        emails.add(email);
+
+        System.out.println("Gerenciador, informe a quantidade de participantes: ");
+        int n = Integer.parseInt(s.nextLine());
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("Informe o email do participante: ");
+            email = s.next();
+            emails.add(email);
+        }
+
+        for (int i = 1; i < n; i++) {
+            Participante p = new Participante();
+            p.email = emails.get(i);
+            participantes.add(p);
+        }
+
+        //Insira o periodo da reuniao, formatado como (ano mes dia ano mes dia)
+        //2021 10 12 2021 10 07
+        for (int i = 0; i < 6; i++) {
+            System.out.println("Informe as datas limite: ");
+            datas[i] = s.nextInt();
+        }
+
+        gerente.limites[0] = java.time.LocalDate.of(datas[0], datas[1], datas[2]);
+        gerente.limites[1] = java.time.LocalDate.of(datas[3], datas[4], datas[5]);
+
+        marcador.marcarReuniaoEntre(gerente.limites[0], gerente.limites[1], emails);
+
+        Participante p1 = new Participante();
+        Participante p2 = new Participante();
+
+        Participante sobreposicoes = new Participante();//Buffer de sobreposicoes
+
+        //LocalDate dataAtual;
         LocalDateTime hora1;
         LocalDateTime hora2;
         LocalDateTime hora3;
@@ -56,9 +100,7 @@ public class Main {
         LocalDateTime hora6;
         LocalDateTime hora7;
         LocalDateTime hora8;
-
-        Scanner s = new Scanner(System.in); // Deixar pra pensar na entrada no final
-
+    
         //Horarios (Participante 1)
         hora1 = java.time.LocalDateTime.of(2021, 12, 10, 10, 23, 24, 544444);
         hora2 = java.time.LocalDateTime.of(2021, 12, 19, 16, 23, 24, 544444);
@@ -72,22 +114,18 @@ public class Main {
         hora8 = java.time.LocalDateTime.of(2021, 12, 21, 18, 23, 24, 999999);
 
         // Adicionar participantes
-
-        Participante p1 = new Participante();
         p1.adionaHorario(hora1, hora2);
         p1.adionaHorario(hora3, hora4);
         
         participantes.add(p1);
 
-        Participante p2 = new Participante();
         p2.adionaHorario(hora5, hora6);
         p2.adionaHorario(hora7, hora8);
 
         participantes.add(p2);
 
-        Participante p3 = new Participante();
-        p3 = verificarSobreposicao(p1, p2);
-        p3.exibirHorarios();
+        sobreposicoes = verificarSobreposicao(p1, p2);
+        sobreposicoes.exibirHorarios();
 
         s.close();
         /*
@@ -112,8 +150,8 @@ public class Main {
          * p1.adionaHorario(LocalDateTime.now(), LocalDateTime.now());
          * 
          * 
-        System.out.println(hora1.isBefore(hora2) && hora2.isBefore(hora4) && hora3.isBefore(hora4));
-        System.out.println(hora1.isBefore(hora2) && hora2.isBefore(hora4) && hora3.isBefore(hora4));
+            System.out.println(hora1.isBefore(hora2) && hora2.isBefore(hora4) && hora3.isBefore(hora4));
+            System.out.println(hora1.isBefore(hora2) && hora2.isBefore(hora4) && hora3.isBefore(hora4));
 
          * p1.exibirHorarios();
          */

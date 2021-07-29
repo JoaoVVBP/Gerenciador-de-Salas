@@ -8,7 +8,7 @@ public class GerenciadorDeSalas {
     Reserva res1 = new Reserva();
 
     public void adicionaSalaChamada(String nome, int capacidadeMaxima, String descricao) {
-        
+        //Sala novaSala = new Sala(nome, descricao, capacidadeMaxima);
     }
 
     public void removeSalaChamada(String nomeDaSala){
@@ -50,7 +50,7 @@ public class GerenciadorDeSalas {
     public void imprimeReservasDaSala(String nomeSala){
         for(int i = 0; i < listaDeReservas.size(); i++) {
             if(listaDeReservas.get(i).salaReservada.nomeDaSala.equals(nomeSala)){
-                System.out.println("Inicio "+listaDeReservas.get(i).inicio+" Fim: "+listaDeReservas.get(i).fim);
+                System.out.println("Nome da Sala "+listaDeReservas.get(i).salaReservada.nomeDaSala+"Inicio "+listaDeReservas.get(i).inicio+" Fim: "+listaDeReservas.get(i).fim);
             }
         }
     }
