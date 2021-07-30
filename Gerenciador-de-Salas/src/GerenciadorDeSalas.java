@@ -4,11 +4,12 @@ import java.time.*;
 public class GerenciadorDeSalas {
 
     List<Reserva> listaDeReservas = new LinkedList<>();    
-    List<Sala> listaDeSalas = new LinkedList<>();
+    static List<Sala> listaDeSalas = new LinkedList<>();
     Reserva res1 = new Reserva();
 
     public void adicionaSalaChamada(String nome, int capacidadeMaxima, String descricao) {
-        
+        Sala sala = new Sala(nome,capacidadeMaxima,descricao);
+        adicionaSala(sala);
     }
 
     public void removeSalaChamada(String nomeDaSala){
