@@ -4,13 +4,12 @@ public class Participante extends Usuario {
 
   Participante(){ }
 
-  Participante(String id, String email){
+  Participante(String email){
     this.email = email;
-    this.id = id;
   }
 
   @Override
-  public void adionaHorario(LocalDateTime horarioInicial, LocalDateTime horarioFinal) {
+  public void adicionaHorario(LocalDateTime horarioInicial, LocalDateTime horarioFinal) {
     dataLista.add(horarioInicial);
     dataLista.add(horarioFinal);
   }

@@ -5,13 +5,12 @@ public class Gerenciador extends Usuario {
 
     Gerenciador() {}
 
-    Gerenciador(String email, String id) {
-        this.email = email;
-        this.id = id;   
+    Gerenciador(String email) {
+        this.email = email;  
     }
 
     @Override
-    public void adionaHorario(LocalDateTime horarioInicial, LocalDateTime horarioFinal) {
+    public void adicionaHorario(LocalDateTime horarioInicial, LocalDateTime horarioFinal) {
         dataLista.add(horarioInicial);
         dataLista.add(horarioFinal);
     }

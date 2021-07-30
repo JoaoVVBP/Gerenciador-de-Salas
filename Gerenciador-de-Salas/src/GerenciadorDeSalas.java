@@ -8,7 +8,7 @@ public class GerenciadorDeSalas {
     Reserva res1 = new Reserva();
 
     public void adicionaSalaChamada(String nome, int capacidadeMaxima, String descricao) {
-        //Sala novaSala = new Sala(nome, descricao, capacidadeMaxima);
+        
     }
 
     public void removeSalaChamada(String nomeDaSala){
