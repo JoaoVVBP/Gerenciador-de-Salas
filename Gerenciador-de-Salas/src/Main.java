@@ -27,20 +27,19 @@ public class Main {
                     p3.dataLista.add(p2.dataLista.get(j - 1));
                     p3.dataLista.add(p2.dataLista.get(j));
                 }
-                //Pode ter erro na logica
-                if (p1.dataLista.get(i).isBefore(p2.dataLista.get(j))
+                // Pode ter erro na logica
+                if (p1.dataLista.get(i + 1).isAfter(p2.dataLista.get(j - 1))
                         && p1.dataLista.get(i).isBefore(p2.dataLista.get(j - 1))
                         && p1.dataLista.get(i + 1).isBefore(p2.dataLista.get(j))) {
-                    System.out.println("Intervalo inicial: "+p2.dataLista.get(j-1)+" Intervalo final: "+p1.dataLista.get(i+1));
-
                     p3.dataLista.add(p2.dataLista.get(j - 1));
                     p3.dataLista.add(p1.dataLista.get(i + 1));
                 }
 
-                if (p1.dataLista.get(i).isBefore(p2.dataLista.get(j))
+                if (p2.dataLista.get(j).isAfter(p1.dataLista.get(i))
                         && p1.dataLista.get(i).isAfter(p2.dataLista.get(j - 1))
-                        && p1.dataLista.get(i+1).isAfter(p2.dataLista.get(j))) {
-                    System.out.println("Intervalo inicial: "+p1.dataLista.get(i)+" Intervalo final: "+p2.dataLista.get(j));
+                        && p2.dataLista.get(j).isBefore(p1.dataLista.get(i + 1))) {
+                    System.out.println(
+                            "Intervalo inicial: " + p1.dataLista.get(i) + " Intervalo final: " + p2.dataLista.get(j));
                     p3.dataLista.add(p1.dataLista.get(i));
                     p3.dataLista.add(p2.dataLista.get(j));
                 }
@@ -65,7 +64,7 @@ public class Main {
         int n = Integer.parseInt(s.nextLine());
 
         for (int i = 0; i < n; i++) {
-            System.out.println("Organizador, informe o email do participante"+ i +": ");
+            System.out.println("Organizador, informe o email do participante" + i + ": ");
             email = s.next();
             emails.add(email);
         }
@@ -85,37 +84,38 @@ public class Main {
         gerente.limites[1] = java.time.LocalDate.of(datas[3], datas[4], datas[5]);
 
         /*
-        int datagerente[] = new int[10];
-
-        System.out.println(
-                "Organizador " + gerente.email + ", informe a quantidade de horarios que voce tem disponibilidade: ");
-        int tam = s.nextInt();
-
-        Participante sobreposicoes = new Participante("Sobreposicoes");// Buffer de sobreposicoes
-
-        Participante buffer = new Participante();
-
-        for (int j = 0; j < tam; j++) {
-
-            System.out.println("Organizador " + gerente.email + " informe seu horario disponivel ("+ j + "): ");
-            for (int k = 0; k < 10; k++) {
-                datagerente[k] = s.nextInt();
-            }
-
-            LocalDateTime horarioInicial = java.time.LocalDateTime.of(datagerente[0], datagerente[1], datagerente[2],
-                    datagerente[3], datagerente[4]);
-            LocalDateTime horarioFinal = java.time.LocalDateTime.of(datagerente[5], datagerente[6], datagerente[7],
-                    datagerente[8], datagerente[9]);
-    
-            buffer.adicionaHorario(horarioInicial, horarioFinal);
-        }*/
+         * int datagerente[] = new int[10];
+         * 
+         * System.out.println( "Organizador " + gerente.email +
+         * ", informe a quantidade de horarios que voce tem disponibilidade: "); int tam
+         * = s.nextInt();
+         * 
+         * Participante sobreposicoes = new Participante("Sobreposicoes");// Buffer de
+         * sobreposicoes
+         * 
+         * Participante buffer = new Participante();
+         * 
+         * for (int j = 0; j < tam; j++) {
+         * 
+         * System.out.println("Organizador " + gerente.email +
+         * " informe seu horario disponivel ("+ j + "): "); for (int k = 0; k < 10; k++)
+         * { datagerente[k] = s.nextInt(); }
+         * 
+         * LocalDateTime horarioInicial = java.time.LocalDateTime.of(datagerente[0],
+         * datagerente[1], datagerente[2], datagerente[3], datagerente[4]);
+         * LocalDateTime horarioFinal = java.time.LocalDateTime.of(datagerente[5],
+         * datagerente[6], datagerente[7], datagerente[8], datagerente[9]);
+         * 
+         * buffer.adicionaHorario(horarioInicial, horarioFinal); }
+         */
 
         marcador.marcarReuniaoEntre(gerente.limites[0], gerente.limites[1], emails);
         Participante sobreposicoes = new Participante("Sobreposicoes");// Buffer de sobreposicoes
 
-        //sobreposicoes = buffer;
+        // sobreposicoes = buffer;
+
         sobreposicoes = participantes.get(0);
-        for (int i = 0; i < participantes.size(); i++) {
+        for (int i = 1; i < participantes.size(); i++) {
             sobreposicoes = verificarSobreposicao(sobreposicoes, participantes.get(i));
         }
         System.out.println(participantes);
