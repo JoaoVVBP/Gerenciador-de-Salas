@@ -5,6 +5,7 @@ public class Main {
     static List<Participante> participantes = new LinkedList<>();
     static List<String> emails = new LinkedList<>();
     static Participante sobreposicoes = new Participante("Sobreposicoes");
+    static GerenciadorDeSalas gerenciador = new GerenciadorDeSalas();
 
 
     public static Participante verificarSobreposicao(Usuario p1, Usuario p2) {
@@ -76,47 +77,27 @@ public class Main {
         return p3;
     }
 
-    public static void main(String[] args) {
-        MarcadorDeReuniao marcador = new MarcadorDeReuniao();
-        String email;
-        Scanner s = new Scanner(System.in); // Deixar pra pensar na entrada no final
-        Gerenciador gerente = new Gerenciador();
+    public static void exibirSalas(){
+        System.out.println("\nLista de salas disponiveis:");
+        for (int i = 0; i < GerenciadorDeSalas.listaDeSalas.size(); i++) {
+            System.out.println("Sala "+(i+1)+": "+GerenciadorDeSalas.listaDeSalas.get(i).nomeDaSala);
+            System.out.println("Capacidade: "+GerenciadorDeSalas.listaDeSalas.get(i).capacidadeMaxima);
+            System.out.println("Descrição: "+GerenciadorDeSalas.listaDeSalas.get(i).descricao);
+            System.out.println();
+        }
+    }
+
+    //Metodo chamado quando o gerente quer organizar uma nova reuniao
+    public static void organizarReuniao(Gerenciador gerente, String email) throws Exception{
+        Scanner s = new Scanner(System.in);
         int datas[] = new int[6];
+        MarcadorDeReuniao marcador = new MarcadorDeReuniao();
 
-        System.out.println("\nOrganizador, informe o seu email: ");
-        email = s.nextLine();
-        gerente.email = email;
-        emails.add(email);
-
-        Sala sala = new Sala();
-
-        System.out.println("\nOrganizador, informe a quantidade de salas disponiveis para uso: ");
+        System.out.println("\nOrganizador, informe a quantidade de participantes: ");
         int n = Integer.parseInt(s.nextLine());
 
         for (int i = 0; i < n; i++) {
-            System.out.println("\nOrganizador, informe o nome da sala "+ (i+1) +": ");
-            sala.nomeDaSala = s.nextLine();
-
-            System.out.println("\nOrganizador, informe o a capacidade maxima da sala "+ (i+1) +": ");
-            sala.capacidadeMaxima = Integer.parseInt(s.nextLine());
-
-            System.out.println("\nOrganizador, informe uma descricao para a sala "+ (i+1) +": ");
-            sala.descricao = s.nextLine();
-
-            for (int j = 0; j < GerenciadorDeSalas.listaDeSalas.size()-1; j++) {
-                if (GerenciadorDeSalas.listaDeSalas.get(j).nomeDaSala.equals(sala.nomeDaSala)) {
-                    System.out.println("Erro: esta sala ja foi adicionada");
-                    i--;
-                }
-            }
-            GerenciadorDeSalas.listaDeSalas.add(sala);
-        }
-
-        System.out.println("\nOrganizador, informe a quantidade de participantes: ");
-        n = Integer.parseInt(s.nextLine());
-
-        for (int i = 0; i < n; i++) {
-            System.out.println("\nOrganizador, informe o email do participante" + (i+1) + ": ");
+            System.out.println("\nOrganizador, informe o email do participante " + (i+1) + ": ");
             email = s.next();
             if(!emails.contains(email)){
                 emails.add(email);
@@ -165,6 +146,7 @@ public class Main {
 
         marcador.marcarReuniaoEntre(gerente.limites[0], gerente.limites[1], emails);
 
+       
         sobreposicoes = buffer;
 
         //sobreposicoes = participantes.get(0);
@@ -180,6 +162,73 @@ public class Main {
 
         marcador.mostraSobreposicao();
 
+          //Seleção da sala:
+        Main.exibirSalas();
+          //Verifica se a sala comporta o numero de participantes
+        System.out.println("Informe o numero da sala selecionada: ");
+        int m = s.nextInt()-1;
+        while(GerenciadorDeSalas.listaDeSalas.get(m).capacidadeMaxima < Main.participantes.size()) {
+            System.out.println("Numero de participantes maior que capacidade maxima da sala.");
+            System.out.println("Informe o numero da sala selecionada: ");
+            m = s.nextInt();    
+        };
+ 
+          //Definir horario da reuniao:
+          if(sobreposicoes.dataLista.size() == 1){
+            //Marcar reunião no unico horario de sobreposicao
+            gerenciador.reservaSalaChamada(GerenciadorDeSalas.listaDeSalas.get(m).nomeDaSala, sobreposicoes.dataLista.get(0), sobreposicoes.dataLista.get(1));
+          } else {
+            System.out.println("\nInforme o numero do horario de sobreposicao para realizar a reuniao: ");
+            int p = s.nextInt();
+            p = (p-1)*2;
+            gerenciador.reservaSalaChamada(GerenciadorDeSalas.listaDeSalas.get(m).nomeDaSala, sobreposicoes.dataLista.get(p), sobreposicoes.dataLista.get(p+1));
+        }
+
+         //Exibir mensagem de reuniao marcada
+        System.out.println("\nReservas: ");
+        gerenciador.imprimeReservasDaSala(GerenciadorDeSalas.listaDeSalas.get(m).nomeDaSala);
+
+    } 
+
+    //if(querCancelarReserva) mostra reservas, seleciona a reserva a cancelar e gerenciador.cancelaReserva(sala);
+
+    public static void main(String[] args) throws Exception {
+        String email;
+        Scanner s = new Scanner(System.in); // Deixar pra pensar na entrada no final
+        Gerenciador gerente = new Gerenciador();
+       
+
+        System.out.println("\nOrganizador, informe o seu email: ");
+        email = s.nextLine();
+        gerente.email = email;
+        emails.add(email);
+
+        System.out.println("\nOrganizador, informe a quantidade de salas disponiveis para uso: ");
+        int n = Integer.parseInt(s.nextLine());
+
+        //Adicionar salas:
+        for (int i = 0; i < n; i++) {
+            Sala sala = new Sala();
+
+            System.out.println("\nOrganizador, informe o nome da sala "+ (i+1) +": ");
+            sala.nomeDaSala = s.nextLine();
+
+            System.out.println("\nOrganizador, informe o a capacidade maxima da sala "+ (i+1) +": ");
+            sala.capacidadeMaxima = Integer.parseInt(s.nextLine());
+
+            System.out.println("\nOrganizador, informe uma descricao para a sala "+ (i+1) +": ");
+            sala.descricao = s.nextLine();
+
+            for (int j = 0; j < GerenciadorDeSalas.listaDeSalas.size()-1; j++) {
+                if (GerenciadorDeSalas.listaDeSalas.get(j).nomeDaSala.equals(sala.nomeDaSala)) {
+                    System.out.println("Erro: esta sala ja foi adicionada");
+                    i--;
+                }
+            }
+            GerenciadorDeSalas.listaDeSalas.add(sala);
+        }
+
+        organizarReuniao(gerente, email);
         s.close();
 
     }

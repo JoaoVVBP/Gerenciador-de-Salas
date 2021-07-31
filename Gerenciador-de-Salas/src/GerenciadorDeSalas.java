@@ -1,5 +1,6 @@
 import java.util.*;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class GerenciadorDeSalas {
 
@@ -32,7 +33,10 @@ public class GerenciadorDeSalas {
         Reserva res = new Reserva();
         for(int i = 0; i < listaDeSalas.size(); i++) {
             if(listaDeSalas.get(i).nomeDaSala.equals(nomeDaSala)){
-                if(!verificarSobreposicao(listaDeSalas.get(i), dataInicial, dataFinal)) res = new Reserva(listaDeSalas().get(i), dataInicial, dataFinal);
+                if(!verificarSobreposicao(listaDeSalas.get(i), dataInicial, dataFinal)){
+                    res = new Reserva(listaDeSalas().get(i), dataInicial, dataFinal);
+                    listaDeReservas.add(res);
+                }
                 else throw new Exception("Não foi possível agendar a sala");
             }
         }
@@ -51,7 +55,12 @@ public class GerenciadorDeSalas {
     public void imprimeReservasDaSala(String nomeSala){
         for(int i = 0; i < listaDeReservas.size(); i++) {
             if(listaDeReservas.get(i).salaReservada.nomeDaSala.equals(nomeSala)){
-                System.out.println("Nome da Sala "+listaDeReservas.get(i).salaReservada.nomeDaSala+"Inicio "+listaDeReservas.get(i).inicio+" Fim: "+listaDeReservas.get(i).fim);
+                LocalDateTime horaInicio = listaDeReservas.get(i).inicio;
+                LocalDateTime horaFim = listaDeReservas.get(i).fim;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                String horaFormatadaInicio = horaInicio.format(formatter);
+                String horaFormatadaFim = horaFim.format(formatter);
+                System.out.println("Nome da Sala: "+listaDeReservas.get(i).salaReservada.nomeDaSala+"\nInicio: "+horaFormatadaInicio+"\nFim: "+horaFormatadaFim);
             }
         }
     }
