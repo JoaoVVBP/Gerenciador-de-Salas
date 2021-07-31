@@ -60,7 +60,7 @@ public class GerenciadorDeSalas {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
                 String horaFormatadaInicio = horaInicio.format(formatter);
                 String horaFormatadaFim = horaFim.format(formatter);
-                System.out.println("Nome da Sala: "+listaDeReservas.get(i).salaReservada.nomeDaSala+"\nInicio: "+horaFormatadaInicio+"\nFim: "+horaFormatadaFim);
+                System.out.println("Reserva ("+i+"): "+"\nNome da Sala: "+listaDeReservas.get(i).salaReservada.nomeDaSala+"\nInicio: "+horaFormatadaInicio+"\nFim: "+horaFormatadaFim);
             }
         }
     }

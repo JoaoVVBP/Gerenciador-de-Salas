@@ -7,7 +7,6 @@ public class Main {
     static Participante sobreposicoes = new Participante("Sobreposicoes");
     static GerenciadorDeSalas gerenciador = new GerenciadorDeSalas();
 
-
     public static Participante verificarSobreposicao(Usuario p1, Usuario p2) {
         Participante p3 = new Participante();
 
@@ -78,6 +77,10 @@ public class Main {
     }
 
     public static void exibirSalas(){
+        if (gerenciador.listaDeSalas().size() == 0) {
+            System.out.println("Erro: Nao existem salas registradas");
+            return;
+        }
         System.out.println("\nLista de salas disponiveis:");
         for (int i = 0; i < GerenciadorDeSalas.listaDeSalas.size(); i++) {
             System.out.println("Sala "+(i+1)+": "+GerenciadorDeSalas.listaDeSalas.get(i).nomeDaSala);
@@ -89,6 +92,11 @@ public class Main {
 
     //Metodo chamado quando o gerente quer organizar uma nova reuniao
     public static void organizarReuniao(Gerenciador gerente, String email) throws Exception{
+        if (GerenciadorDeSalas.listaDeSalas.size() == 0) {
+            System.out.println("Erro: Nao existem salas registradas");
+            return;
+        }
+
         Scanner s = new Scanner(System.in);
         int datas[] = new int[6];
         MarcadorDeReuniao marcador = new MarcadorDeReuniao();
@@ -171,7 +179,7 @@ public class Main {
             System.out.println("Numero de participantes maior que capacidade maxima da sala.");
             System.out.println("Informe o numero da sala selecionada: ");
             m = s.nextInt();    
-        };
+        }
  
           //Definir horario da reuniao:
           if(sobreposicoes.dataLista.size() == 1){
@@ -185,25 +193,40 @@ public class Main {
         }
 
          //Exibir mensagem de reuniao marcada
-        System.out.println("\nReservas: ");
+        System.out.println("\nReserva efetudada: ");
         gerenciador.imprimeReservasDaSala(GerenciadorDeSalas.listaDeSalas.get(m).nomeDaSala);
-
     } 
 
-    //if(querCancelarReserva) mostra reservas, seleciona a reserva a cancelar e gerenciador.cancelaReserva(sala);
+    public static void imprimirReservas(){
+        if (gerenciador.listaDeReservas.size() == 0) {
+            System.out.println("\nErro: Nao existem reservas efetuadas");
+            return;
+        }
+        else System.out.println("\nLista de reservas: ");
+        for (int i = 0; i < gerenciador.listaDeReservas.size() ; i++) {
+            gerenciador.imprimeReservasDaSala(gerenciador.listaDeReservas.get(i).salaReservada.nomeDaSala);
+        }
+        return;
+    }
 
-    public static void main(String[] args) throws Exception {
-        String email;
-        Scanner s = new Scanner(System.in); // Deixar pra pensar na entrada no final
-        Gerenciador gerente = new Gerenciador();
-       
+    public static void removeReserva(){
+        if (gerenciador.listaDeReservas.size() == 0) {
+            System.out.println("\nErro: Nao existem reservas efetuadas");
+            return;
+        }
+        Scanner s = new Scanner(System.in);
+        imprimirReservas();
+        System.out.println("\nInsira o nome da sala que deseja excluir: ");
+        int n = Integer.parseInt(s.nextLine());
+        gerenciador.cancelaReserva(gerenciador.listaDeReservas.get(n));
 
-        System.out.println("\nOrganizador, informe o seu email: ");
-        email = s.nextLine();
-        gerente.email = email;
-        emails.add(email);
+        return;
+    }
 
-        System.out.println("\nOrganizador, informe a quantidade de salas disponiveis para uso: ");
+    public static void insereSala(){
+        Scanner s = new Scanner(System.in);
+
+        System.out.println("\nOrganizador, informe a quantidade de salas que deseja adicionar: ");
         int n = Integer.parseInt(s.nextLine());
 
         //Adicionar salas:
@@ -213,7 +236,7 @@ public class Main {
             System.out.println("\nOrganizador, informe o nome da sala "+ (i+1) +": ");
             sala.nomeDaSala = s.nextLine();
 
-            System.out.println("\nOrganizador, informe o a capacidade maxima da sala "+ (i+1) +": ");
+            System.out.println("\nOrganizador, informe a capacidade maxima da sala "+ (i+1) +": ");
             sala.capacidadeMaxima = Integer.parseInt(s.nextLine());
 
             System.out.println("\nOrganizador, informe uma descricao para a sala "+ (i+1) +": ");
@@ -221,74 +244,54 @@ public class Main {
 
             for (int j = 0; j < GerenciadorDeSalas.listaDeSalas.size()-1; j++) {
                 if (GerenciadorDeSalas.listaDeSalas.get(j).nomeDaSala.equals(sala.nomeDaSala)) {
-                    System.out.println("Erro: esta sala ja foi adicionada");
+                    System.out.println("\nErro: esta sala ja foi adicionada");
                     i--;
                 }
             }
             GerenciadorDeSalas.listaDeSalas.add(sala);
         }
+    }
 
-        organizarReuniao(gerente, email);
+    public static void main(String[] args) throws Exception {
+        String email;
+        Scanner s = new Scanner(System.in); // Deixar pra pensar na entrada no final
+        Gerenciador gerente = new Gerenciador();
+       
+        System.out.println("\nOrganizador, informe o seu email: ");
+        email = s.nextLine();
+        gerente.email = email;
+        emails.add(email);
+
+        int m = 0;
+        do {
+            System.out.println("\nEscolha uma :\n (1): Criar nova reunião\n (2): Cancelar reserva\n (3): Adicionar nova sala à lista de salas\n (4): Exibir reservas\n (5): Exibir salas\n (6): Sair\n");
+            m = s.nextInt();
+            switch (m) {
+                case 1:
+                    organizarReuniao(gerente, email);
+                    break;
+                case 2:
+                    removeReserva();
+                    break;
+                case 3:
+                    insereSala();
+                    break;
+                case 4:
+                    imprimirReservas();
+                    break;
+                case 5:
+                    exibirSalas();
+                    break;
+                case 6:
+                    System.out.println("Encerrando...");
+                    break;
+                default:
+                System.out.println("...");
+                    break;
+            }
+        } while (m !=6);
+
         s.close();
-
+        return;
     }
 }
-
-/*
- * //Atribuição: dataAtual = LocalDate.now(); hora1 = LocalDateTime.now();
- * 
- * dataAtual = java.time.LocalDate.of(2021,12,12);
- * 
- * hora1 = java.time.LocalDateTime.of(2021, 12, 13, 21, 23, 24, 544444); hora2 =
- * java.time.LocalDateTime.of(2021, 12, 13, 22, 23, 24, 544444); hora3 =
- * java.time.LocalDateTime.of(2021, 12, 13, 23, 23, 24, 544444); hora4 =
- * java.time.LocalDateTime.of(2021, 12, 13, 23, 59, 59, 999999);
- * 
- * System.out.println("Data atual: "+dataAtual);
- * System.out.println("Hora atual: "+hora1);
- * 
- * System.out.println(hora1.isBefore(hora2) && hora2.isBefore(hora4) &&
- * hora3.isBefore(hora4));
- * 
- * 
- * p1.adicionaHorario(LocalDateTime.now(), LocalDateTime.now());
- * p1.adicionaHorario(LocalDateTime.now(), LocalDateTime.now());
- * p1.adicionaHorario(LocalDateTime.now(), LocalDateTime.now());
- * 
- * 
- * System.out.println(hora1.isBefore(hora2) && hora2.isBefore(hora4) &&
- * hora3.isBefore(hora4)); System.out.println(hora1.isBefore(hora2) &&
- * hora2.isBefore(hora4) && hora3.isBefore(hora4));
- * 
- * p1.exibirHorarios();
- */
-
-         /*
-         * // LocalDate dataAtual; LocalDateTime hora1; LocalDateTime hora2;
-         * LocalDateTime hora3; LocalDateTime hora4; LocalDateTime hora5; LocalDateTime
-         * hora6; LocalDateTime hora7; LocalDateTime hora8;
-         * 
-         * // Horarios (Participante 1) hora1 = java.time.LocalDateTime.of(2021, 12, 10,
-         * 10, 23, 24, 544444); hora2 = java.time.LocalDateTime.of(2021, 12, 19, 16, 23,
-         * 24, 544444); hora3 = java.time.LocalDateTime.of(2021, 12, 20, 14, 23, 24,
-         * 544444); hora4 = java.time.LocalDateTime.of(2021, 12, 22, 18, 23, 24,
-         * 999999);
-         * 
-         * // Horarios (Participante 2) hora5 = java.time.LocalDateTime.of(2021, 12, 9,
-         * 10, 23, 24, 544444); hora6 = java.time.LocalDateTime.of(2021, 12, 11, 16, 23,
-         * 24, 544444); hora7 = java.time.LocalDateTime.of(2021, 12, 12, 14, 23, 24,
-         * 544444); hora8 = java.time.LocalDateTime.of(2021, 12, 21, 18, 23, 24,
-         * 999999);
-         * 
-         * // Adicionar participantes p1.adicionaHorario(hora1, hora2);
-         * p1.adicionaHorario(hora3, hora4);
-         * 
-         * participantes.add(p1);
-         * 
-         * p2.adicionaHorario(hora5, hora6); p2.adicionaHorario(hora7, hora8);
-         * 
-         * participantes.add(p2);
-         * 
-         * 
-         * sobreposicoes.exibirHorarios();
-         */
