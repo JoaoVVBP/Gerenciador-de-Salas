@@ -1,6 +1,8 @@
 import java.time.*;
 import java.util.*;
 
+//Classe abstrata Usuário (Gerenciador e Participantes)
+
 abstract class Usuario {
     String email;
   

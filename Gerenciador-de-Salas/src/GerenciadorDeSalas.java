@@ -8,27 +8,24 @@ public class GerenciadorDeSalas {
     static List<Sala> listaDeSalas = new LinkedList<>();
     Reserva res1 = new Reserva();
 
+    //recebe o nome da sala, a capacidade máxima da sala e uma descrição, criando uma instancia de sala
     public void adicionaSalaChamada(String nome, int capacidadeMaxima, String descricao) {
         Sala sala = new Sala(nome,capacidadeMaxima,descricao);
         adicionaSala(sala);
     }
 
+    //remove a sala da lista de salas
     public void removeSalaChamada(String nomeDaSala){
-        for(int i = 0; i < listaDeSalas.size(); i++) {
-            if(listaDeSalas.get(i).nomeDaSala.equals(nomeDaSala)){
-                listaDeSalas.remove(listaDeSalas.get(i));
-            }
-        }
+        for(int i = 0; i < listaDeSalas.size(); i++) if(listaDeSalas.get(i).nomeDaSala.equals(nomeDaSala)) listaDeSalas.remove(listaDeSalas.get(i));
     }
 
-    public List<Sala> listaDeSalas(){
-        return listaDeSalas;
-    }
+    //devolve uma instância de List com objetos do tipo Sala
+    public List<Sala> listaDeSalas(){ return listaDeSalas; }
 
-    public void adicionaSala(Sala novaSala){
-        listaDeSalas.add(novaSala);
-    }
+    //recebe uma instância de Sala e a adiciona a lista de salas
+    public void adicionaSala(Sala novaSala){ listaDeSalas.add(novaSala); }
 
+    //recebe um nome de sala, um LocalDateTime que indica o início da reserva e um outro LocalDateTime para indicar o final da reserva. O método devolve uma instância de Reserva;
     public Reserva reservaSalaChamada(String nomeDaSala, LocalDateTime dataInicial, LocalDateTime dataFinal) throws Exception{
         Reserva res = new Reserva();
         for(int i = 0; i < listaDeSalas.size(); i++) {
@@ -36,23 +33,38 @@ public class GerenciadorDeSalas {
                 if(!verificarSobreposicao(listaDeSalas.get(i), dataInicial, dataFinal)){
                     res = new Reserva(listaDeSalas().get(i), dataInicial, dataFinal);
                     listaDeReservas.add(res);
-                }
-                else throw new Exception("Não foi possível agendar a sala");
+                } else throw new Exception("Não foi possível agendar a sala");
             }
         }
         return res;
     }
 
-    public void cancelaReserva(Reserva cancelada){
-        listaDeReservas.remove(cancelada);
+    //Verificar se há sobreposição de reserva de salas
+    public boolean verificarSobreposicao(Sala sala, LocalDateTime dataInicial, LocalDateTime dataFinal){
+        for (int i = 0; i < listaDeReservas.size(); i++) {
+            if(listaDeReservas.get(i).salaReservada == sala){
+
+                //Intervalos diferentes
+                if(dataInicial.isAfter(listaDeReservas.get(i).inicio) && dataFinal.isBefore(listaDeReservas.get(i).fim) 
+                    || dataInicial.isBefore(listaDeReservas.get(i).inicio) && dataFinal.isAfter(listaDeReservas.get(i).fim)
+                        || dataInicial.isBefore(listaDeReservas.get(i).fim) && dataFinal.isAfter(listaDeReservas.get(i).fim)
+                            || dataInicial.isBefore(listaDeReservas.get(i).inicio) && dataFinal.isAfter(listaDeReservas.get(i).inicio)){return true;}   
+               
+                //Intervalos iguais:
+                if(dataInicial.isEqual(listaDeReservas.get(i).inicio) && dataFinal.isEqual(listaDeReservas.get(i).inicio) 
+                    || dataInicial.isEqual(listaDeReservas.get(i).inicio)  
+                        || dataInicial.isEqual(listaDeReservas.get(i).inicio)){return true;} 
+            }
+        }
+        return false;
     }
 
-    public Collection<Reserva> reservasParaSala(String nomeSala){
-        
-        return listaDeReservas;
-    }
+    public void cancelaReserva(Reserva cancelada){ listaDeReservas.remove(cancelada); }
+
+    public Collection<Reserva> reservasParaSala(String nomeSala){ return listaDeReservas; }
 
     public void imprimeReservasDaSala(String nomeSala){
+        System.out.println();
         for(int i = 0; i < listaDeReservas.size(); i++) {
             if(listaDeReservas.get(i).salaReservada.nomeDaSala.equals(nomeSala)){
                 LocalDateTime horaInicio = listaDeReservas.get(i).inicio;
@@ -64,17 +76,4 @@ public class GerenciadorDeSalas {
             }
         }
     }
-
-    public boolean verificarSobreposicao(Sala sala, LocalDateTime dataInicial, LocalDateTime dataFinal){
-        for (int i = 0; i < listaDeReservas.size(); i++) {
-            if(listaDeReservas.get(i).salaReservada == sala){
-                if(dataInicial.isAfter(listaDeReservas.get(i).inicio) && dataFinal.isBefore(listaDeReservas.get(i).fim)) return true;   //Nova reunião dentro do periodo da antiga
-                if(dataInicial.isBefore(listaDeReservas.get(i).inicio) && dataFinal.isAfter(listaDeReservas.get(i).fim)) return true;   //Reunião antiga dentro do periodo da nova
-                if(dataInicial.isBefore(listaDeReservas.get(i).fim) && dataFinal.isAfter(listaDeReservas.get(i).fim)) return true;   //Reunião nova começa antes da antiga acabar
-                if(dataInicial.isBefore(listaDeReservas.get(i).inicio) && dataFinal.isAfter(listaDeReservas.get(i).inicio)) return true;   //Reunião nova termina dentro do periodo da nova
-            }         
-        } 
-        return false;
-    }
-
 }
