@@ -39,7 +39,7 @@ public class GerenciadorDeSalas {
         return res;
     }
 
-    //Verificar se há sobreposição de reserva de salas
+    //verificar se há sobreposição de reserva de salas
     public boolean verificarSobreposicao(Sala sala, LocalDateTime dataInicial, LocalDateTime dataFinal){
         for (int i = 0; i < listaDeReservas.size(); i++) {
             if(listaDeReservas.get(i).salaReservada == sala){
@@ -61,7 +61,13 @@ public class GerenciadorDeSalas {
 
     public void cancelaReserva(Reserva cancelada){ listaDeReservas.remove(cancelada); }
 
-    public Collection<Reserva> reservasParaSala(String nomeSala){ return listaDeReservas; }
+    //devolve uma lista com todas reservas de nomeSala
+    public Collection<Reserva> reservasParaSala(String nomeSala){ 
+        List<Reserva> reservasSala= new LinkedList<>();
+        for (int i = 0; i < listaDeReservas.size(); i++) 
+            if(listaDeReservas.get(i).salaReservada.nomeDaSala == nomeSala) reservasSala.add(listaDeReservas.get(i));
+        return reservasSala; 
+    }
 
     public void imprimeReservasDaSala(String nomeSala){
         System.out.println();
