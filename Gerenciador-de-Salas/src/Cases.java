@@ -136,13 +136,13 @@ public class Cases {
         }
         int i = 0;
         while (i < Execute.manager.ReservesList.size()) {
-            Execute.manager.imprimeReservasDaSala(Execute.manager.ReservesList.get(i).reservedRoom.roomsName);
+            Execute.manager.imprimeReservasDaSala(Execute.manager.ReservesList.get(i).salaReservada.roomsName);
             i++;
         }
         return;
     }
 
-    public static void removeReserva() {
+    public static void removeReserve() {
         if (Execute.manager.ReservesList.size() == 0) {
             System.out.println("\nNão há nenhuma reserva existente.");
             return;
@@ -163,7 +163,7 @@ public class Cases {
         int quantityRooms = Integer.parseInt(sc.nextLine());
         int i = 0;
         while (i < quantityRooms) {
-            Room sala = new Room();
+            Sala sala = new Sala();
 
             System.out.println("\nDigite o nome da sala " + (i + 1) + ": ");
             sala.roomsName = sc.nextLine();

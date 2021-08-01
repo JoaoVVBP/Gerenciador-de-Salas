@@ -1,11 +1,11 @@
-public class Room {
+public class Sala {
     String roomsName;
     String description;
     int maxCapacity;
 
-    public Room(){}
+    public Sala(){}
 
-    public Room(String roomsName, int maxCapacity, String description) {
+    public Sala(String roomsName, int maxCapacity, String description) {
         this.roomsName = roomsName;
         this.description = description;
         this.maxCapacity = maxCapacity;

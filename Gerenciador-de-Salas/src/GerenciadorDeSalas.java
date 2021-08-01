@@ -4,12 +4,12 @@ import java.time.format.*;
 
 public class GerenciadorDeSalas {
 
-    List<Reserve> ReservesList = new ArrayList<>();    
-    static List<Room> roomsList = new ArrayList<>();
-    Reserve reserved = new Reserve();
+    List<Reserva> ReservesList = new ArrayList<>();    
+    static List<Sala> roomsList = new ArrayList<>();
+    Reserva reserved = new Reserva();
 
     public void adicionaSalaChamada(String name, int maxCapacity, String description) {
-        Room room = new Room(name,maxCapacity,description);
+        Sala room = new Sala(name,maxCapacity,description);
         adicionaSala(room);
     }
 
@@ -23,16 +23,16 @@ public class GerenciadorDeSalas {
         }
     }
 
-    public List<Room> roomsList(){
+    public List<Sala> roomsList(){
         return roomsList;
     }
 
-    public void adicionaSala(Room newRoom){
+    public void adicionaSala(Sala newRoom){
         roomsList.add(newRoom);
     }
 
-    public Reserve reservaSalaChamada(String roomsName, LocalDateTime startDate, LocalDateTime endDate) throws Exception{
-        Reserve reserved = new Reserve();
+    public Reserva reservaSalaChamada(String roomsName, LocalDateTime startDate, LocalDateTime endDate) throws Exception{
+        Reserva reserved = new Reserva();
         int i = 0;
         while(i < roomsList.size()) {
             if(roomsList.get(i).roomsName.equals(roomsName)){
@@ -40,7 +40,7 @@ public class GerenciadorDeSalas {
                     throw new Exception("Não foi possível agendar a sala");
                 }
                 else {
-                    reserved = new Reserve(roomsList().get(i), startDate, endDate);
+                    reserved = new Reserva(roomsList().get(i), startDate, endDate);
                     ReservesList.add(reserved);
                 }
             }
@@ -49,25 +49,25 @@ public class GerenciadorDeSalas {
         return reserved;
     }
 
-    public void cancelaReserva(Reserve canceled){
+    public void cancelaReserva(Reserva canceled){
         ReservesList.remove(canceled);
     }
 
-    public Collection<Reserve> reservasParaSala(String roomsName){
+    public Collection<Reserva> reservasParaSala(String roomsName){
         return ReservesList;
     }
 
     public void imprimeReservasDaSala(String roomsName){
         int i = 0;
         while(i < ReservesList.size()) {
-            if(ReservesList.get(i).reservedRoom.roomsName.equals(roomsName)){
+            if(ReservesList.get(i).salaReservada.roomsName.equals(roomsName)){
                 DateTimeFormatter dateFormatted = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-                LocalDateTime endTime = ReservesList.get(i).end;
-                LocalDateTime startTime = ReservesList.get(i).start;
+                LocalDateTime endTime = ReservesList.get(i).fim;
+                LocalDateTime startTime = ReservesList.get(i).inicio;
                 String startFormattedTime = startTime.format(dateFormatted);
                 String endFormattedTime = endTime.format(dateFormatted);
                 System.out.println("Número da reserva: " + i);
-                System.out.println("Sala: " + ReservesList.get(i).reservedRoom.roomsName);
+                System.out.println("Sala: " + ReservesList.get(i).salaReservada.roomsName);
                 System.out.println("Início da reunião: " + startFormattedTime);
                 System.out.println("Fim da reunião: " + endFormattedTime);
             }
@@ -75,14 +75,14 @@ public class GerenciadorDeSalas {
         }
     }
 
-    public int verifyOverLays(Room room, LocalDateTime startDate, LocalDateTime endDate){
+    public int verifyOverLays(Sala room, LocalDateTime startDate, LocalDateTime endDate){
         int i = 0;
         while ( i < ReservesList.size()) {
-            if(ReservesList.get(i).reservedRoom == room){
-                if(startDate.isBefore(ReservesList.get(i).start) && endDate.isAfter(ReservesList.get(i).end)) return 1;   
-                if(startDate.isAfter(ReservesList.get(i).start) && endDate.isBefore(ReservesList.get(i).end)) return 1;   
-                if(startDate.isBefore(ReservesList.get(i).start) && endDate.isAfter(ReservesList.get(i).start)) return 1; 
-                if(startDate.isBefore(ReservesList.get(i).end) && endDate.isAfter(ReservesList.get(i).end)) return 1;
+            if(ReservesList.get(i).salaReservada == room){
+                if(startDate.isBefore(ReservesList.get(i).inicio) && endDate.isAfter(ReservesList.get(i).fim)) return 1;   
+                if(startDate.isAfter(ReservesList.get(i).inicio) && endDate.isBefore(ReservesList.get(i).fim)) return 1;   
+                if(startDate.isBefore(ReservesList.get(i).inicio) && endDate.isAfter(ReservesList.get(i).inicio)) return 1; 
+                if(startDate.isBefore(ReservesList.get(i).fim) && endDate.isAfter(ReservesList.get(i).fim)) return 1;
             }         
             i++;
         } 

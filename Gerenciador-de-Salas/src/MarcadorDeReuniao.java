@@ -21,14 +21,14 @@ public class MarcadorDeReuniao {
                 }
                 LocalDateTime startTime = java.time.LocalDateTime.of(bufferDates[0], bufferDates[1], bufferDates[2], bufferDates[3], bufferDates[4]);
                 LocalDateTime endTime = java.time.LocalDateTime.of(bufferDates[5], bufferDates[6], bufferDates[7], bufferDates[8], bufferDates[9]);
-                indicaDisponibilidadeDe(Execute.guests.get(i).e_mail, startTime, endTime);
+                indicaDisponibilidade(Execute.guests.get(i).e_mail, startTime, endTime);
                 j++;
             }
             i++;
         }
     }
 
-    public void indicaDisponibilidadeDe(String guest, LocalDateTime start, LocalDateTime end) {
+    public void indicaDisponibilidade(String guest, LocalDateTime start, LocalDateTime end) {
         int i = 0;
         while (i < Execute.guests.size()) {
             if (Execute.guests.get(i).e_mail.equals(guest)) Execute.guests.get(i).listDate.add(start);

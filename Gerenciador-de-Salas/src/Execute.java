@@ -38,7 +38,7 @@ public class Execute {
                     Cases.insereSala();
                     break;
                 case 3:
-                    Cases.removeReserva();
+                    Cases.removeReserve();
                     break;
                 case 4:
                     Cases.displayReserves();
