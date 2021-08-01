@@ -202,7 +202,7 @@ public class Main {
     //Método para exibir todas as reservas efetuadas
     public static void imprimirReservas() {
         if (gerenciador.listaDeReservas.size() == 0) {
-            System.out.println("\nErro: Nao existem reservas efetuadas");
+            System.out.println("\nErro: não existem reservas efetuadas");
             return;
         } else System.out.println("\nLista de reservas: ");
         for (int i = 0; i < gerenciador.listaDeReservas.size(); i++) gerenciador.imprimeReservasDaSala(gerenciador.listaDeReservas.get(i).salaReservada.nomeDaSala);
@@ -214,7 +214,7 @@ public class Main {
 
         //Testa se há reservas
         if (gerenciador.listaDeReservas.size() == 0) {
-            System.out.println("\nErro: Nao existem reservas efetuadas");
+            System.out.println("\nErro: não existem reservas efetuadas");
             return;
         }
         Scanner s = new Scanner(System.in);
@@ -228,8 +228,10 @@ public class Main {
         if (n > gerenciador.listaDeReservas.size() || n < 0) {
             System.out.println("\nValor invalido.");
             removerReserva();
-        } else gerenciador.cancelaReserva(gerenciador.listaDeReservas.get(n));
-
+        } else {
+            System.out.println("Reserva "+n+" excluida.");
+            gerenciador.cancelaReserva(gerenciador.listaDeReservas.get(n));
+        }
         return;
     }
 
@@ -279,8 +281,10 @@ public class Main {
         if (n>GerenciadorDeSalas.listaDeSalas.size() || n<0) {
             System.out.println("\nValor invalido.");
             removerSala();
-        } else gerenciador.removeSalaChamada(GerenciadorDeSalas.listaDeSalas.get(n).nomeDaSala);
-
+        } else {
+            System.out.println("Sala "+GerenciadorDeSalas.listaDeSalas.get(n).nomeDaSala+" excluida.");
+            gerenciador.removeSalaChamada(GerenciadorDeSalas.listaDeSalas.get(n).nomeDaSala);
+        }
         return;
     }
 
