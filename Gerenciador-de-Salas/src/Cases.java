@@ -20,8 +20,11 @@ public class Cases {
         }
     }
 
-    
     public static void DeleteRoom() {
+        if (GerenciadorDeSalas.roomsList.size() == 0) {
+            System.out.println("Ainda não há salas, insira salas, para que seja possível exibí-las.");
+            return;
+        }       
         displayRooms();
         System.out.println("Qual o nome da sala que deseja remover?");
         Scanner sc = new Scanner(System.in);
@@ -94,7 +97,7 @@ public class Cases {
         Execute.overLays = buffer;
         i = 1;
         while (i < Execute.guests.size()) {
-            Execute.overLays = VerifyOverLays.verifyOverLays(Execute.overLays, Execute.guests.get(i));
+            Execute.overLays = VerifyOverlays.verifyOverLays(Execute.overLays, Execute.guests.get(i));
             i++;
         }
 

@@ -1,4 +1,4 @@
-public class VerifyOverLays{
+public class VerifyOverlays{
     public static Guest verifyOverLays(Guest guest1, Guest guest2) {
         Guest guest3 = new Guest();
         int i = 0; 
