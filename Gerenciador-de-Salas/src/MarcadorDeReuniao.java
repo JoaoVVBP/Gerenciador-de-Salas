@@ -16,7 +16,7 @@ public class MarcadorDeReuniao {
 
                 for (int j=0; j<n; j++) {
                     System.out.println("\nParticipante " + Main.participantes.get(i).email+ ", informe seu horario de disponibilidade (" + (j + 1) + ")");
-                    System.out.println("Exemplo de entrada: \n2021 07 30 12 00 (inicio)\n2021 07 30 15 30 (fim)");
+                    System.out.println("Exemplo de entrada: \n2021 07 30 12 00 (inicio)\n2021 07 30 15 30 (fim)\n");
                     for (int k = 0; k < 10; k++) {
                         datasTemp[k] = s.nextInt();
                     }

@@ -64,7 +64,7 @@ public class Main {
     //Método para exibir todas as salas na lista (usado no switch)
     public static void exibirSalas() {
         if (GerenciadorDeSalas.listaDeSalas.size() == 0) {
-            System.out.println("Erro: não existem salas registradas");
+            System.out.println("\nErro: não existem salas registradas");
             return;
         }
         System.out.println("\nLista de salas disponiveis:");
@@ -81,7 +81,7 @@ public class Main {
 
         //testa se há alguma sala criada
         if (GerenciadorDeSalas.listaDeSalas.size() == 0) {
-            System.out.println("Erro: não existem salas registradas");
+            System.out.println("\nErro: não existem salas registradas");
             return;
         }
 
@@ -99,7 +99,7 @@ public class Main {
         boolean haSalaValida = false;
         for (int i = 0; i < GerenciadorDeSalas.listaDeSalas.size(); i++) if(GerenciadorDeSalas.listaDeSalas.get(i).capacidadeMaxima >= n+1) haSalaValida = true;
         if(!haSalaValida){
-            System.out.println("Erro: nenhuma sala comporta o número de participantes.");
+            System.out.println("\nErro: nenhuma sala comporta o número de participantes.");
             return;
         }
 
@@ -134,7 +134,7 @@ public class Main {
         int tam = s.nextInt();
         for (int j = 0; j < tam; j++) {
             System.out.println("\nOrganizador " + gerente.email + ", informe seu horario disponivel (" + (j + 1) + "): ");
-            System.out.println("Exemplo de entrada: \n2021 07 30 12 00 (inicio)\n2021 07 30 15 30 (fim)");
+            System.out.println("Exemplo de entrada: \n2021 07 30 12 00 (inicio)\n2021 07 30 15 30 (fim)\n");
             for (int k = 0; k < 10; k++) dataGerente[k] = s.nextInt();
             
             LocalDateTime horarioInicial = java.time.LocalDateTime.of(dataGerente[0], dataGerente[1], dataGerente[2], dataGerente[3], dataGerente[4]);
