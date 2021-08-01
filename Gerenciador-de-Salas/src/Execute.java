@@ -26,7 +26,7 @@ public class Execute {
             System.out.println("3: Remover reserva");
             System.out.println("4: Imprimir reservas");
             System.out.println("5: Exibir salas");
-            System.out.println("6: Remove sala");
+            System.out.println("6: Remover sala");
             System.out.println("7: Encerra o programa");
             m = sc.nextInt();
             switch (m) {
