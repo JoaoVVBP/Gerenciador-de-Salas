@@ -66,7 +66,7 @@ public class GerenciadorDeSalas {
                 LocalDateTime startTime = ReservesList.get(i).inicio;
                 String startFormattedTime = startTime.format(dateFormatted);
                 String endFormattedTime = endTime.format(dateFormatted);
-                System.out.println("Número da reserva: " + i);
+                System.out.println("Número da reserva: " + (i + 1));
                 System.out.println("Sala: " + ReservesList.get(i).salaReservada.roomsName);
                 System.out.println("Início da reunião: " + startFormattedTime);
                 System.out.println("Fim da reunião: " + endFormattedTime);
