@@ -3,7 +3,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class MarcadorDeReuniao {
-    int bufferdatas[] = new int[10];
+    int datasTemp[] = new int[10];
     Scanner s = new Scanner(System.in);
 
     //Marca reuniao entre os participantes adicionados
@@ -11,18 +11,17 @@ public class MarcadorDeReuniao {
         listaDeParticipantes.clear();
         try {
             for (int i=0; i<Main.participantes.size(); i++) {
-                System.out.println("\nParticipante " + Main.participantes.get(i).email
-                        + ", informe a quantidade de horarios em que voce tem disponibilidade: ");
+                System.out.println("\nParticipante " + Main.participantes.get(i).email+ ", informe a quantidade de horarios em que voce tem disponibilidade: ");
                 int n = s.nextInt();
 
                 for (int j=0; j<n; j++) {
                     System.out.println("\nParticipante " + Main.participantes.get(i).email+ ", informe seu horario de disponibilidade (" + (j + 1) + ")");
                     System.out.println("Exemplo de entrada: \n2021 07 30 12 00 (inicio)\n2021 07 30 15 30 (fim)");
                     for (int k = 0; k < 10; k++) {
-                        bufferdatas[k] = s.nextInt();
+                        datasTemp[k] = s.nextInt();
                     }
-                    LocalDateTime horarioInicial = java.time.LocalDateTime.of(bufferdatas[0], bufferdatas[1], bufferdatas[2], bufferdatas[3], bufferdatas[4]);
-                    LocalDateTime horarioFinal = java.time.LocalDateTime.of(bufferdatas[5], bufferdatas[6],bufferdatas[7], bufferdatas[8], bufferdatas[9]);
+                    LocalDateTime horarioInicial = java.time.LocalDateTime.of(datasTemp[0], datasTemp[1], datasTemp[2], datasTemp[3], datasTemp[4]);
+                    LocalDateTime horarioFinal = java.time.LocalDateTime.of(datasTemp[5], datasTemp[6],datasTemp[7], datasTemp[8], datasTemp[9]);
 
                     // Verifica se está nos limites definidos pelo organizador
                     LocalDate inicioLocalDate = horarioInicial.toLocalDate();
@@ -53,7 +52,6 @@ public class MarcadorDeReuniao {
     }
 
     public void mostraSobreposicao() {
-
         int t = 1;
         System.out.println("\nOrganizador: " + Main.gerente.email + "\nDisponibilidade: ");
         for (int j = 0; j < Main.gerente.dataLista.size(); j++) {
@@ -83,7 +81,7 @@ public class MarcadorDeReuniao {
             }
             index = 1;
         }
-        System.out.println("\nSobreposicoes: ");
+        System.out.println("\nSobreposições: ");
         for (int j=0; j<Main.sobreposicoes.dataLista.size(); j++) {
             LocalDateTime hora = Main.sobreposicoes.dataLista.get(j);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");

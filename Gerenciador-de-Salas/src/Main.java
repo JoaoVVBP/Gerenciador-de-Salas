@@ -95,6 +95,14 @@ public class Main {
         System.out.println("\nOrganizador, informe a quantidade de participantes: ");
         int n = Integer.parseInt(s.nextLine());
 
+        //Verifica se alguma sala comporta o número de participantes
+        boolean haSalaValida = false;
+        for (int i = 0; i < GerenciadorDeSalas.listaDeSalas.size(); i++) if(GerenciadorDeSalas.listaDeSalas.get(i).capacidadeMaxima >= n+1) haSalaValida = true;
+        if(!haSalaValida){
+            System.out.println("Erro: nenhuma sala comporta o número de participantes.");
+            return;
+        }
+
         for (int i = 0; i < n; i++) {
             System.out.println("\nOrganizador, informe o email do participante " +(i+1) +": ");
             email = s.next();
@@ -115,24 +123,22 @@ public class Main {
         //Entrada de dados: periodo limite em que a reunião pode ser marcada
         System.out.println("\nOrganizador, informe o periodo no qual pretende marcar a reuniao: ");
         System.out.println("Exemplo de entrada: \n2021 07 30 (inicio)\n2021 07 30 (fim)\n");
-        for (int i = 0; i < 6; i++) {
-            datas[i] = s.nextInt();
-        }
+        for (int i = 0; i < 6; i++) datas[i] = s.nextInt();
+        
         gerente.limites[0] = java.time.LocalDate.of(datas[0], datas[1], datas[2]);
         gerente.limites[1] = java.time.LocalDate.of(datas[3], datas[4], datas[5]);
 
         //Disponibilidade do organizador
-        int datagerente[] = new int[10];
-        System.out.println(
-                "\nOrganizador " + gerente.email + ", informe a quantidade de horarios em que voce tem disponibilidade: ");
+        int dataGerente[] = new int[10];
+        System.out.println("\nOrganizador " + gerente.email + ", informe a quantidade de horarios em que voce tem disponibilidade: ");
         int tam = s.nextInt();
         for (int j = 0; j < tam; j++) {
             System.out.println("\nOrganizador " + gerente.email + ", informe seu horario disponivel (" + (j + 1) + "): ");
             System.out.println("Exemplo de entrada: \n2021 07 30 12 00 (inicio)\n2021 07 30 15 30 (fim)");
-            for (int k = 0; k < 10; k++) datagerente[k] = s.nextInt();
+            for (int k = 0; k < 10; k++) dataGerente[k] = s.nextInt();
             
-            LocalDateTime horarioInicial = java.time.LocalDateTime.of(datagerente[0], datagerente[1], datagerente[2], datagerente[3], datagerente[4]);
-            LocalDateTime horarioFinal = java.time.LocalDateTime.of(datagerente[5], datagerente[6], datagerente[7], datagerente[8], datagerente[9]);
+            LocalDateTime horarioInicial = java.time.LocalDateTime.of(dataGerente[0], dataGerente[1], dataGerente[2], dataGerente[3], dataGerente[4]);
+            LocalDateTime horarioFinal = java.time.LocalDateTime.of(dataGerente[5], dataGerente[6], dataGerente[7], dataGerente[8], dataGerente[9]);
 
             // Verifica se está nos limites definidos pelo organizador
             LocalDate inicioLocalDate = horarioInicial.toLocalDate();
@@ -158,14 +164,6 @@ public class Main {
 
         //Seleção da sala:
         Main.exibirSalas();
-
-        //Verifica se alguma sala comporta o número de participantes
-        boolean haSalaValida = false;
-        for (int i = 0; i < GerenciadorDeSalas.listaDeSalas.size(); i++) if(GerenciadorDeSalas.listaDeSalas.get(i).capacidadeMaxima >= participantes.size()) haSalaValida = true;
-        if(!haSalaValida){
-            System.out.println("Erro: nenhuma sala comporta o número de participantes.");
-            return;
-        }
 
         // Verifica se a sala comporta o numero de participantes
         System.out.println("Informe o numero da sala selecionada: ");
