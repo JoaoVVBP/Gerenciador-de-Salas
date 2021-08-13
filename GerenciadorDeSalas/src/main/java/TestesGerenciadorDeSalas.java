@@ -2,7 +2,7 @@ import java.util.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-public class TestClass2 {
+public class TestesGerenciadorDeSalas {
 
     public static GerenciadorDeSalas gerenciador = new GerenciadorDeSalas();
     public static String nomeDaB3 = "B-3";
