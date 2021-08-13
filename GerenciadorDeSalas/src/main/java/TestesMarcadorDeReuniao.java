@@ -1,7 +1,7 @@
 import java.util.*;
 import java.time.*;
 
-public class TestClass1 {
+public class TestesMarcadorDeReuniao {
 
     public static MarcadorDeReuniao marcadorDaReuniaoDaDiretoria = new MarcadorDeReuniao();
     public static MarcadorDeReuniao marcadorDaReuniaoDaGalera = new MarcadorDeReuniao();
