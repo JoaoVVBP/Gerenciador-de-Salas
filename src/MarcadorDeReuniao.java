@@ -8,7 +8,7 @@ public class MarcadorDeReuniao {
 
     //Marca reuniao entre os participantes adicionados
     public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes) {
-        listaDeParticipantes.clear();
+        //Limpar a lista de participantes aqui, o metodo clear usado anteriormente crashava o programa
         try {
             for (int i=0; i<Main.participantes.size(); i++) {
                 System.out.println("\nParticipante " + Main.participantes.get(i).email+ ", informe a quantidade de horarios em que voce tem disponibilidade: ");

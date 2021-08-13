@@ -23,4 +23,15 @@ public class Reserva {
     //Contrutor padrão
     public Reserva(){};
 
+    public Sala getSala() {
+        return salaReservada;
+    }
+
+    public LocalDateTime getInicio() {
+        return inicio;
+    }
+
+    public LocalDateTime getFim() {
+        return fim;
+    }
 }
