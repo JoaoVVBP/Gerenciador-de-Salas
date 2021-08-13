@@ -5,28 +5,37 @@ import java.time.format.DateTimeFormatter;
 public class TestesGerenciadorDeSalas {
 
     public static GerenciadorDeSalas gerenciador = new GerenciadorDeSalas();
+
     public static String nomeDaB3 = "B-3";
     public static String localDaB3 = "IME - Bloco B - Terreo";
     public static int capacidadeDaB3 = 60;
     public static Sala b3 = new Sala();
+
     public static String nomeDoAuditorio = "Auditorio Antonio Giglioli";
     public static String localDoAuditorio = "IME - Bloco A - Primeiro Andar";
     public static int capacidadeDoAuditorio = 95;
     public static String obsDoAuditorio = "Possui projetor LCD, rede com e sem fio e lousa eletronica";
     public static Sala auditorio = new Sala();
+
     public static Sala quentura = new Sala();
+
     public static Sala frescura = new Sala();
+
     public static Sala cloneMalignoDaB3 = new Sala();
+
     public static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     public static void main(String[] args) {
+
         b3.setNome(nomeDaB3);
         b3.setLocal(localDaB3);
         b3.setCapacidade(capacidadeDaB3);
+
         auditorio.setNome(nomeDoAuditorio);
         auditorio.setLocal(localDoAuditorio);
         auditorio.setCapacidade(capacidadeDoAuditorio);
         auditorio.setObservacoes(obsDoAuditorio);
+
         quentura.setNome("b-143");
         frescura.setNome("b-115");
         cloneMalignoDaB3.setNome("B-3");
@@ -77,7 +86,6 @@ public class TestesGerenciadorDeSalas {
 
 
     public static void case3() { //testAdcionaSalaComMesmoNome
-
 
         try {
             System.out.println("----------------------------- Teste 3 -----------------------------");

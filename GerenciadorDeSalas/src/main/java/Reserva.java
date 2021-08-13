@@ -20,7 +20,7 @@ public class Reserva {
         this.fim = fim;
     }
 
-    //Contrutor padrão
+    //Construtor padrão
     public Reserva(){};
 
     public Sala getSala() {

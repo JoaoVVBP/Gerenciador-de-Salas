@@ -34,8 +34,7 @@ public class Disponibilidade{//Alterei participante para Disponibilidade, removi
   //Método para exibir horários (Nao lembro se eh util)
   public void exibirHorarios(){
     for (int i = 0; i < dataLista.size(); i++) {
-      System.out.println("Index: "+i+" Elemento: "+dataLista.get(i));
+      System.out.println(email+" "+i+" Elemento: "+dataLista.get(i));
     }
   }
-
 }
