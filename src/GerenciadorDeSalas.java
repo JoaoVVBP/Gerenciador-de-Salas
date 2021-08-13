@@ -64,7 +64,7 @@ public class GerenciadorDeSalas {
     public Collection<Reserva> reservasParaSala(String nomeSala){ 
         List<Reserva> reservasSala= new LinkedList<>();
         for (int i = 0; i < listaDeReservas.size(); i++) 
-            if(listaDeReservas.get(i).salaReservada.nomeDaSala == nomeSala) reservasSala.add(listaDeReservas.get(i));
+            if(listaDeReservas.get(i).salaReservada.nomeDaSala.equals(nomeSala)) reservasSala.add(listaDeReservas.get(i));
         return reservasSala; 
     }
 
