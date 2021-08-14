@@ -1,7 +1,5 @@
 import java.time.*;
 
-//Classe para salvar a reserva de uma sala
-
 public class Reserva {
 
     Sala salaReservada;
@@ -14,7 +12,6 @@ public class Reserva {
         this.fim = fim;
     }
 
-    //Construtor padrão
     public Reserva(){}
 
     public Sala getSala() {

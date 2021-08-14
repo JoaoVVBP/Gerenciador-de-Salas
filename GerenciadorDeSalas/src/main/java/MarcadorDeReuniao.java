@@ -12,10 +12,10 @@ public class MarcadorDeReuniao {
     List<Disponibilidade> disponibilidades = new LinkedList<>();
     Disponibilidade sobreposicoes = new Disponibilidade("Sobreposicoes");
 
-    MarcadorDeReuniao() {}
+    MarcadorDeReuniao() {
+    }
 
-    //O ultimo indice de disponibilidade deve sempre ser o das sobreposicoes ?? Nao lembro por que escrevi isso, vou dormir
-    public static Disponibilidade verificarSobreposicao(Disponibilidade d1, Disponibilidade d2) {//Implementar esse dentro de exibirSobreposicao
+    public static Disponibilidade verificarSobreposicao(Disponibilidade d1, Disponibilidade d2) {
         Disponibilidade d3 = new Disponibilidade();
 
         // Caso seja necessário verificar mais de um intervalo:
@@ -73,15 +73,18 @@ public class MarcadorDeReuniao {
         return LocalDateTime.of(dataInicial, localTime);
     }
 
-    //Marca reuniao entre os participantes adicionados
-    //A definição dos participantes da reunião será feita utilizando-se do seguinte método
-    public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes) {//Problemas aqui
+    public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes) throws Exception {
+        if (dataFinal.isBefore(dataInicial)) {
+            System.out.println("Erro: Verificar exceptions");
+            throw new Exception("\nErro: Nao foi possivel marcar a reuniao" + "\nMotivo: A data final da reuniao antecede a data inicial");
+        }
+
         List<String> participantes = new LinkedList<>(listaDeParticipantes);
 
         disponibilidades.clear();
 
         Disponibilidade reuniao = new Disponibilidade("Reuniao", dataInicial, dataFinal);
-        disponibilidades.add(reuniao);//Esta adicionando a reuniao duas vezes, checar no Debugger e nos Testes
+        disponibilidades.add(reuniao);
 
         LocalDateTime tinicial = converteLocalDate(dataInicial);
         LocalDateTime tfinal = converteLocalDate(dataFinal);
@@ -95,24 +98,26 @@ public class MarcadorDeReuniao {
         }
     }
 
-    //Cada participante define os seus horários disponíveis. Usado como auxiliar de marcarReuniaoEntre.
-    //Talvez seja necessario mover o metodo de disponibilidade do main para aqui
-    public void indicaDisponibilidadeDe(String participante, LocalDateTime inicio, LocalDateTime fim) throws Exception { //Este parece estar funcionando normalmente
+    public void indicaDisponibilidadeDe(String participante, LocalDateTime inicio, LocalDateTime fim) throws Exception {
         boolean check = false;
+
+        if (disponibilidades.size() == 0){
+            System.out.println("Erro: Verificar exceptions");
+            throw new Exception("\nErro: Nao foi possivel registrar a disponibilidade" + "\nMotivo: Reuniao inexistente");
+        }
+        LocalDateTime checkFim = converteLocalDate(disponibilidades.get(0).fimReuniao);
+        LocalDateTime checkInicio = converteLocalDate(disponibilidades.get(0).inicioReuniao);
 
         if (fim.isBefore(inicio)) {
             System.out.println("Erro: Verificar exceptions");
             throw new Exception("\nErro: Nao foi possivel registrar a disponibilidade" + "\nMotivo: A data final de disponibilidade antecede a data inicial");
         }
-
-        LocalDateTime checkFim = converteLocalDate(disponibilidades.get(0).fimReuniao);
-        LocalDateTime checkInicio = converteLocalDate(disponibilidades.get(0).inicioReuniao);
-
+        else
         if (inicio.isAfter(checkFim) || fim.isBefore(checkInicio)) {
             System.out.println("Erro: Verificar exceptions");
-            throw new Exception("\nErro: Nao foi possivel registrar a disponibilidade do participante (" + participante + ")" + "\nMotivo: Disponibilidade posterior ou anteriror a data limite da reuniao");
+            throw new Exception("\nErro: Nao foi possivel registrar a disponibilidade do participante (" + participante + ")" + "\nMotivo: Disponibilidade posterior ou anterior a data limite da reuniao");
         } else {
-            for (int i = 1; i < disponibilidades.size(); i++) {//Provavelmente certo
+            for (int i = 1; i < disponibilidades.size(); i++) {
                 if (disponibilidades.get(i).email.equals(participante)) {
                     disponibilidades.get(i).dataLista.add(inicio);
                     disponibilidades.get(i).dataLista.add(fim);
