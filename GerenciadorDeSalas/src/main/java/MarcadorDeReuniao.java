@@ -110,7 +110,7 @@ public class MarcadorDeReuniao {
 
         if (inicio.isAfter(checkFim) || fim.isBefore(checkInicio)) {
             System.out.println("Erro: Verificar exceptions");
-            throw new Exception("\nErro: Nao foi possivel registrar a disponibilidade do participante ("+ participante +")" + "\nMotivo: Disponibilidade posterior ou anteriror a data limite da reuniao");
+            throw new Exception("\nErro: Nao foi possivel registrar a disponibilidade do participante (" + participante + ")" + "\nMotivo: Disponibilidade posterior ou anteriror a data limite da reuniao");
         } else {
             for (int i = 1; i < disponibilidades.size(); i++) {//Provavelmente certo
                 if (disponibilidades.get(i).email.equals(participante)) {
@@ -126,7 +126,7 @@ public class MarcadorDeReuniao {
         }
     }
 
-    public void mostraSobreposicao() throws Exception{
+    public void mostraSobreposicao() throws Exception {
         int index = 1;
 
         if (disponibilidades.size() <= 2) {
@@ -138,7 +138,7 @@ public class MarcadorDeReuniao {
             }
         }
 
-        if (sobreposicoes.dataLista.size() == 0){
+        if (sobreposicoes.dataLista.size() == 0) {
             System.out.println("Erro: Verificar exceptions");
             throw new Exception("\nErro: Nao foi possivel imprimir as sobreposicoes" + "\nMotivo: Nenhuma sobreposicao de horario encontrada");
         }

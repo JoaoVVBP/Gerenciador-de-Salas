@@ -8,12 +8,6 @@ public class Reserva {
     LocalDateTime inicio;
     LocalDateTime fim;
 
-    /*
-    Construtor da classe Reserva
-    @param salaReservada: sala a ser reservada
-    @param inicio: inicio da reunião
-    @param fim : fim da reunião
-    */
     public Reserva(Sala salaReservada, LocalDateTime inicio, LocalDateTime fim) {
         this.salaReservada = salaReservada;
         this.inicio = inicio;

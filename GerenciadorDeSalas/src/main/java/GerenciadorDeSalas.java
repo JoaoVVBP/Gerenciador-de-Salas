@@ -3,8 +3,8 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class GerenciadorDeSalas {
-    GerenciadorDeSalas() {
-    }
+
+    GerenciadorDeSalas() {}
 
     List<Reserva> listaDeReservas = new LinkedList<>();
     static List<Sala> listaDeSalas = new LinkedList<>();
@@ -58,8 +58,6 @@ public class GerenciadorDeSalas {
             System.out.println("Erro: Verificar exceptions");
             throw new Exception("Erro: Não foi possível agendar a sala" + "\n Motivo: Horario final antecede o inicial");
         }
-
-
 
         for (int i = 0; i < listaDeSalas.size(); i++) {
             if (listaDeSalas.get(i).nomeDaSala.equals(nomeDaSala)) {
@@ -117,9 +115,10 @@ public class GerenciadorDeSalas {
     //devolve uma lista com todas reservas de nomeSala
     public Collection<Reserva> reservasParaSala(String nomeSala) {
         List<Reserva> reservasSala = new LinkedList<>();
-        for (int i = 0; i < listaDeReservas.size(); i++)
-            if (listaDeReservas.get(i).salaReservada.nomeDaSala.equals(nomeSala))
-                reservasSala.add(listaDeReservas.get(i));
+        for (Reserva listaDeReserva : listaDeReservas)
+            if (listaDeReserva.salaReservada.nomeDaSala.equals(nomeSala)) {
+                reservasSala.add(listaDeReserva);
+            }
         return reservasSala;
     }
 
