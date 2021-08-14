@@ -70,14 +70,13 @@ public class MarcadorDeReuniao {
 
     public LocalDateTime converteLocalDate(LocalDate dataInicial) {
         LocalTime localTime = LocalTime.of(0, 0);
-        LocalDateTime dataTime = LocalDateTime.of(dataInicial, localTime);
-        return dataTime;
+        return LocalDateTime.of(dataInicial, localTime);
     }
 
     //Marca reuniao entre os participantes adicionados
     //A definição dos participantes da reunião será feita utilizando-se do seguinte método
     public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes) {//Problemas aqui
-        List<String> participantes = new LinkedList<String>(listaDeParticipantes);
+        List<String> participantes = new LinkedList<>(listaDeParticipantes);
 
         disponibilidades.clear();
 
@@ -90,8 +89,8 @@ public class MarcadorDeReuniao {
         disponibilidades.get(0).dataLista.add(tinicial);
         disponibilidades.get(0).dataLista.add(tfinal);
 
-        for (int i = 0; i < participantes.size(); i++) {
-            Disponibilidade dp = new Disponibilidade(participantes.get(i));
+        for (String participante : participantes) {
+            Disponibilidade dp = new Disponibilidade(participante);
             disponibilidades.add(dp);
         }
     }

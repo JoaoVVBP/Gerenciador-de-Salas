@@ -21,7 +21,7 @@ public class Reserva {
     }
 
     //Construtor padrão
-    public Reserva(){};
+    public Reserva(){}
 
     public Sala getSala() {
         return salaReservada;

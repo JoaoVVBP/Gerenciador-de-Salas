@@ -12,8 +12,8 @@ public class GerenciadorDeSalas {
     //recebe o nome da sala, a capacidade máxima da sala e uma descrição, criando uma instancia de sala
     public void adicionaSalaChamada(String nome, int capacidadeMaxima, String descricao) throws Exception {
         Sala sala = new Sala(nome, capacidadeMaxima, descricao);
-        for (int i = 0; i < listaDeSalas.size(); i++) {
-            if (listaDeSalas.get(i).nomeDaSala.equals(nome)) {
+        for (Sala listaDeSala : listaDeSalas) {
+            if (listaDeSala.nomeDaSala.equals(nome)) {
                 System.out.println("Erro: Verificar exceptions");
                 throw new Exception("\nErro: Nao foi possivel adicionar a sala" + "\nMotivo: Sala ja registrada");
             }
@@ -24,8 +24,8 @@ public class GerenciadorDeSalas {
 
     //recebe uma instância de Sala e a adiciona a lista de salas
     public void adicionaSala(Sala novaSala) throws Exception {
-        for (int i = 0; i < listaDeSalas.size(); i++) {
-            if (listaDeSalas.get(i).nomeDaSala.equals(novaSala.nomeDaSala)) {
+        for (Sala listaDeSala : listaDeSalas) {
+            if (listaDeSala.nomeDaSala.equals(novaSala.nomeDaSala)) {
                 System.out.println("Erro: Verificar exceptions");
                 throw new Exception("\nErro: Nao foi possivel adicionar a sala" + "\nMotivo: Sala ja registrada");
             }
@@ -81,21 +81,21 @@ public class GerenciadorDeSalas {
 
     //verificar se há sobreposição de reserva de salas
     public boolean verificarSobreposicao(Sala sala, LocalDateTime dataInicial, LocalDateTime dataFinal) {
-        for (int i = 0; i < listaDeReservas.size(); i++) {
-            if (listaDeReservas.get(i).salaReservada == sala) {
+        for (Reserva listaDeReserva : listaDeReservas) {
+            if (listaDeReserva.salaReservada == sala) {
 
                 //Intervalos diferentes
-                if (dataInicial.isAfter(listaDeReservas.get(i).inicio) && dataFinal.isBefore(listaDeReservas.get(i).fim)
-                        || dataInicial.isBefore(listaDeReservas.get(i).inicio) && dataFinal.isAfter(listaDeReservas.get(i).fim)
-                        || dataInicial.isBefore(listaDeReservas.get(i).fim) && dataFinal.isAfter(listaDeReservas.get(i).fim)
-                        || dataInicial.isBefore(listaDeReservas.get(i).inicio) && dataFinal.isAfter(listaDeReservas.get(i).inicio)) {
+                if (dataInicial.isAfter(listaDeReserva.inicio) && dataFinal.isBefore(listaDeReserva.fim)
+                        || dataInicial.isBefore(listaDeReserva.inicio) && dataFinal.isAfter(listaDeReserva.fim)
+                        || dataInicial.isBefore(listaDeReserva.fim) && dataFinal.isAfter(listaDeReserva.fim)
+                        || dataInicial.isBefore(listaDeReserva.inicio) && dataFinal.isAfter(listaDeReserva.inicio)) {
                     return true;
                 }
 
                 //Intervalos iguais:
-                if (dataInicial.isEqual(listaDeReservas.get(i).inicio) && dataFinal.isEqual(listaDeReservas.get(i).inicio)
-                        || dataInicial.isEqual(listaDeReservas.get(i).inicio)
-                        || dataInicial.isEqual(listaDeReservas.get(i).inicio)) {
+                if (dataInicial.isEqual(listaDeReserva.inicio) && dataFinal.isEqual(listaDeReserva.inicio)
+                        || dataInicial.isEqual(listaDeReserva.inicio)
+                        || dataInicial.isEqual(listaDeReserva.inicio)) {
                     return true;
                 }
             }
