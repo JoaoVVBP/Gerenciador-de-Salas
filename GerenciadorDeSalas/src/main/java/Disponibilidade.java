@@ -20,5 +20,4 @@ public class Disponibilidade{//Alterei participante para Disponibilidade, removi
     this.inicioReuniao = inicioReuniao;
     this.fimReuniao = fimReuniao;
   }
-
 }
