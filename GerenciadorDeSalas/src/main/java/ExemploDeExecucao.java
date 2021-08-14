@@ -12,7 +12,7 @@ public class ExemploDeExecucao {
     public static Sala s1 = new Sala();
 
     public static String nomeSala2 = "Salinha de RP";
-    public static String localSala2 = "Coração do Brasil";
+    public static String localSala2 = "Coracao do Brasil";
     public static int capacidadeSala2 = 12000;
     public static String obsDaSala2 = "Computador, Quadro verde";
 
