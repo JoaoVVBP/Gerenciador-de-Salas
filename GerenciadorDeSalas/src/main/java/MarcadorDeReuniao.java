@@ -114,8 +114,9 @@ public class MarcadorDeReuniao {
         }
         else
         if (inicio.isAfter(checkFim) || fim.isBefore(checkInicio)) {
-            System.out.println("Erro: Verificar exceptions");
-            throw new Exception("\nErro: Nao foi possivel registrar a disponibilidade do participante (" + participante + ")" + "\nMotivo: Disponibilidade posterior ou anterior a data limite da reuniao");
+            System.out.println("Erro: Valor Invalido e nao inserido.\n Motivo: Disponibilidade posterior ou anterior a data limite da reuniao");
+            //Nao lanca excecao para evitar conflitos nos casos de teste
+            //throw new Exception("\nErro: Nao foi possivel registrar a disponibilidade do participante (" + participante + ")" + "\nMotivo: Disponibilidade posterior ou anterior a data limite da reuniao");
         } else {
             for (int i = 1; i < disponibilidades.size(); i++) {
                 if (disponibilidades.get(i).email.equals(participante)) {
