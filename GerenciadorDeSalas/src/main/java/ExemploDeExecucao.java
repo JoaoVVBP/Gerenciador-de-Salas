@@ -27,17 +27,13 @@ public class ExemploDeExecucao {
 
     public static LocalDate dia15mes4de2004 =  LocalDate.of(2004, 4, 15);
     public static LocalDate  dia16mes4de2004 =  LocalDate.of(2004, 4, 16);
-    public static LocalDate  dia17mes4de2004 =  LocalDate.of(2004, 4, 17);
     public static LocalDate  dia18mes4de2004 =  LocalDate.of(2004, 4, 18);
     public static LocalDate  dia19mes4de2004 =  LocalDate.of(2004, 4, 19);
     public static LocalDate  dia20mes4de2004 =  LocalDate.of(2004, 4, 20);
 
-    public static LocalTime as10horas = LocalTime.of(10, 0);
     public static LocalTime aoMeioDia = LocalTime.of(12, 0);
     public static LocalTime as14horas = LocalTime.of(14, 0);
     public static LocalTime as16horas = LocalTime.of(16, 0);
-    public static LocalTime as18horas = LocalTime.of(18, 0);
-    public static LocalTime as20horas = LocalTime.of(20, 0);
 
 
     public static String ivandroide = "ivandroideparabolico@usp.br";
@@ -49,8 +45,7 @@ public class ExemploDeExecucao {
 
     public static void main(String[] args) {
         List<String> listaDeParticipantesDaDiretoria = List.of(ivandroide, ovelha);
-        List<String> listaDeParticipantesDaGivandroidera = List.of(ivandroide, ovelha, lauragarcia, lobo, carina, steven);
-        List<String> listaDeParticipantesDaGivandroidera2 = List.of(ivandroide, ovelha, carina);
+        List<String> listaDeParticipantesDaGalera = List.of(ivandroide, ovelha, lauragarcia, lobo, carina, steven);
 
         s1.setCapacidade(capacidadeSala);
         s1.setNome(nomeSala);
@@ -166,7 +161,7 @@ public class ExemploDeExecucao {
         System.out.println("\nMarcando reuniao com um grupo de participantes: ");
 
         try {
-            marcadorDaReuniaoDaGalera.marcarReuniaoEntre(dia15mes4de2004, dia20mes4de2004, listaDeParticipantesDaGivandroidera);
+            marcadorDaReuniaoDaGalera.marcarReuniaoEntre(dia15mes4de2004, dia20mes4de2004, listaDeParticipantesDaGalera);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -8,31 +8,6 @@ mainClassName = 'ExemploDeExecucao'
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-task(GerenciadorDeSalas, dependsOn: 'classes', type: JavaExec) {
-    main = 'TestesGerenciadorDeSalas'
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-task(MarcadorDeReuniao, dependsOn: 'classes', type: JavaExec) {
-    main = 'TestesMarcadorDeReuniao'
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-task(ExemploDeExecucao, dependsOn: 'classes', type: JavaExec) {
-    main = 'ExemploDeExecucao'
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-task(ExecutarTestes){
-    dependsOn(GerenciadorDeSalas)
-    dependsOn(MarcadorDeReuniao)
-    dependsOn(ExemploDeExecucao)
-    mustRunAfter(GerenciadorDeSalas)
-    mustRunAfter(MarcadorDeReuniao)
-    mustRunAfter(ExemploDeExecucao)
-}
-
-
 repositories {
     mavenCentral()
 }
