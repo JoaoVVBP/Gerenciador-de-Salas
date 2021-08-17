@@ -1,2 +1,2 @@
-include 'GerenciadorDeSalas'
+include 'GerenciadorDeSalas', 'tests'
 
