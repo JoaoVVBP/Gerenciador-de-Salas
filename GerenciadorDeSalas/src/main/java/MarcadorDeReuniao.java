@@ -144,6 +144,38 @@ public class MarcadorDeReuniao {
             }
         }
 
+        //exibir escolhas de horarios
+        System.out.println("Horários informados: ");
+
+        for (int i = 0; i < 2; i++) {
+            LocalDateTime hora = disponibilidades.get(0).dataLista.get(i);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            String horaFormatado = hora.format(formatter);
+            if (i == 0) System.out.print("Horário de execução da reunião: "+horaFormatado+" -> ");
+            else System.out.println(horaFormatado);
+        }
+
+
+        for (int i = 1; i < disponibilidades.size(); i++) {
+            if(disponibilidades.get(i).dataLista.size() != 0) {
+                System.out.print(disponibilidades.get(i).email + ": ");
+                int cont = 0;
+                for (int j = 0; j < disponibilidades.get(i).dataLista.size(); j++) {
+                    LocalDateTime hora = disponibilidades.get(i).dataLista.get(j);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                    String horaFormatado = hora.format(formatter);
+                    if ((j + 1) % 2 != 0) {
+                        System.out.print("horario(" + (cont) + ") " + horaFormatado + " -> ");
+                    } else {
+                        System.out.println(horaFormatado);
+                        cont++;
+                    }
+                }
+            }
+        }
+
+        System.out.println();
+
         if (sobreposicoes.dataLista.size() == 0) {
             System.out.println("Erro: Verificar exceptions");
             throw new Exception("\nErro: Nao foi possivel imprimir as sobreposicoes" + "\nMotivo: Nenhuma sobreposicao de horario encontrada");
